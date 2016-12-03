@@ -79,6 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\Impl\FileServiceWpf.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="Views\PhotoGalleryView.xaml.cs">
       <DependentUpon>PhotoGalleryView.xaml</DependentUpon>
