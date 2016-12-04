@@ -80,7 +80,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Services\Impl\FileServiceWpf.cs" />
+    <Compile Include="Services\Impl\SpecialFolderPathsWpf.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="Utils\PhotoGalleryTemplateSelector.cs" />
     <Compile Include="Views\PhotoGalleryView.xaml.cs">
       <DependentUpon>PhotoGalleryView.xaml</DependentUpon>
     </Compile>

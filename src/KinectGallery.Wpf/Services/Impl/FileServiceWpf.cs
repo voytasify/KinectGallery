@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using KinectGallery.Core.Extensions;
 using KinectGallery.Core.Models;
 using KinectGallery.Core.Services;
@@ -10,25 +11,25 @@ namespace KinectGallery.Wpf.Services.Impl
 {
 	public class FileServiceWpf : IFileService
 	{
-		private string Path => Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-
-		public IEnumerable<Element> GetElements()
+		public async Task<IEnumerable<Element>> GetElements(string folderPath)
 		{
-			var elements = new List<Element>();
-			AddAllElements(new DirectoryInfo(Path), elements);
-			return elements;
-		}
+			return await Task.Run(() =>
+			{
+				var elements = new List<Element>();
+				var directory = new DirectoryInfo(folderPath);
 
-		private void AddAllElements(DirectoryInfo directory, ICollection<Element> elements, int n = 0)
-		{
-			foreach (var dir in directory.GetDirectories())
-				AddAllElements(dir, elements, n + 1);
+				var parentDirectory = directory.Parent;
+				if(parentDirectory != null)
+					elements.Add(new DirectoryElement($"go back -> {parentDirectory.Name}", parentDirectory.FullName));
 
-			foreach (var file in directory.GetFiles().Where(f => f.Extension.IsImageExtension()))
-				elements.Add(new ImageElement(file.Name, file.FullName));
+				foreach (var dir in directory.GetDirectories())
+					elements.Add(new DirectoryElement(dir.Name, dir.FullName));
 
-			if (n > 0)
-				elements.Add(new DirectoryElement(directory.Name, directory.FullName));
+				foreach (var file in directory.GetFiles().Where(f => f.Extension.IsImageExtension()))
+					elements.Add(new ImageElement(file.Name, file.FullName));
+
+				return elements;
+			});
 		}
 	}
 }

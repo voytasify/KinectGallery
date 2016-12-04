@@ -24,6 +24,7 @@ namespace KinectGallery.Wpf
 			base.InitializeFirstChance();
 
 			Mvx.LazyConstructAndRegisterSingleton<IFileService>(() => new FileServiceWpf());
+			Mvx.LazyConstructAndRegisterSingleton<ISpecialFolderPaths>(() => new SpecialFolderPathsWpf());
 		}
 	}
 }

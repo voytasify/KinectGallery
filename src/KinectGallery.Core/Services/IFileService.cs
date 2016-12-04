@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using KinectGallery.Core.Models;
 
 namespace KinectGallery.Core.Services
 {
 	public interface IFileService
 	{
-		IEnumerable<Element> GetElements();
+		Task<IEnumerable<Element>> GetElements(string folderPath);
 	}
 }
