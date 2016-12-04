@@ -1,5 +1,9 @@
-﻿using System.Windows.Threading;
+﻿using System;
+using System.Windows.Threading;
+using KinectGallery.Core.Services;
+using KinectGallery.Wpf.Services.Impl;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using MvvmCross.Wpf.Platform;
 using MvvmCross.Wpf.Views;
 
@@ -15,11 +19,12 @@ namespace KinectGallery.Wpf
 		protected override IMvxApplication CreateApp()
 			=> new Core.App();
 
-		protected override IMvxWpfViewsContainer CreateWpfViewsContainer()
+		protected override void InitializeFirstChance()
 		{
-			var container = base.CreateWpfViewsContainer();
-//			container
-			return base.CreateWpfViewsContainer();
+			base.InitializeFirstChance();
+
+			Mvx.LazyConstructAndRegisterSingleton<IFileService>(() => new FileServiceWpf());
+			Mvx.LazyConstructAndRegisterSingleton<ISpecialFolderPaths>(() => new SpecialFolderPathsWpf());
 		}
 	}
 }

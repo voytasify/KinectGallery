@@ -5,10 +5,68 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:KinectGallery.Wpf.Views"
       xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
+      xmlns:utils="clr-namespace:KinectGallery.Wpf.Utils"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-           <TextBlock>hello</TextBlock>
-    </Grid>
+
+	<views:MvxWpfView.Resources>
+		<DataTemplate x:Key="ImageDataTemplate">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				
+				<Image Grid.Row="0"
+					   Source="{Binding FullName}"
+					   Width="400"
+					   Height="225"/>
+				<TextBlock Grid.Row="1"
+						   Text="{Binding Name}"
+						   Foreground="AliceBlue"
+						   FontSize="16"
+						   HorizontalAlignment="Center"/>
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="DirectoryDataTemplate">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				
+				<Rectangle Grid.Row="0"
+					   Fill="Purple"
+					   Width="400"
+					   Height="225"/>
+				<TextBlock Grid.Row="1"
+						   Text="{Binding Name}"
+						   Foreground="AliceBlue"
+						   FontSize="16"
+						   HorizontalAlignment="Center"/>
+			</Grid>
+		</DataTemplate>
+		<utils:PhotoGalleryTemplateSelector
+			x:Key="TemplateSelector"
+			ImageTemplate="{StaticResource ImageDataTemplate}"
+			DirectoryTemplate="{StaticResource DirectoryDataTemplate}"/>
+	</views:MvxWpfView.Resources>
+	<Grid>
+		<ListView Name="ImageListView"
+				  ItemsSource="{Binding Elements}"
+				  ItemTemplateSelector="{StaticResource TemplateSelector}"
+				  Background="Black">
+			<ListView.InputBindings>
+				<KeyBinding Key="Enter"
+							Command="{Binding SelectCommand}"
+							CommandParameter="{Binding ElementName=ImageListView, Path=SelectedItem}"/>
+			</ListView.InputBindings>
+			<ListView.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</ListView.ItemsPanel>
+		</ListView>
+	</Grid>
 </views:MvxWpfView>
 
