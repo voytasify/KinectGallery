@@ -2,8 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:KinectGallery.Wpf"
+			 xmlns:converters="clr-namespace:KinectGallery.Wpf.Converters"
 			 StartupUri="Views/PhotoGalleryView.xaml">
     <Application.Resources>
-         
+         <converters:ElementToImageSourceConverter x:Key="ElementToImageSourceConverter"/>
+		 <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+		 <converters:BoolToInverseVisibilityConverter x:Key="BoolToInverseVisibilityConverter"/>
     </Application.Resources>
 </Application>

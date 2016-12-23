@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Threading;
+﻿using System.Windows.Threading;
 using KinectGallery.Core.Services;
 using KinectGallery.Wpf.Services.Impl;
 using MvvmCross.Core.ViewModels;

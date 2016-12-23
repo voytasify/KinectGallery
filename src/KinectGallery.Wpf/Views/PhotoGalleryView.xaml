@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:KinectGallery.Wpf.Views"
       xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
       xmlns:utils="clr-namespace:KinectGallery.Wpf.Utils"
+      xmlns:tz="http://schemas.abtsoftware.co.uk/transitionz"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300">
 
@@ -16,16 +17,17 @@
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				
+
 				<Image Grid.Row="0"
-					   Source="{Binding FullName}"
-					   Width="400"
-					   Height="225"/>
+					Source="{Binding FullName}"
+					Width="400"
+					Height="225">
+				</Image>
 				<TextBlock Grid.Row="1"
-						   Text="{Binding Name}"
-						   Foreground="AliceBlue"
-						   FontSize="16"
-						   HorizontalAlignment="Center"/>
+						Text="{Binding Name}"
+						Foreground="AliceBlue"
+						FontSize="16"
+						HorizontalAlignment="Center"/>
 			</Grid>
 		</DataTemplate>
 		<DataTemplate x:Key="DirectoryDataTemplate">
@@ -34,16 +36,17 @@
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				
+
 				<Rectangle Grid.Row="0"
-					   Fill="Purple"
-					   Width="400"
-					   Height="225"/>
+					Fill="Purple"
+					Width="400"
+					Height="225">
+				</Rectangle>
 				<TextBlock Grid.Row="1"
-						   Text="{Binding Name}"
-						   Foreground="AliceBlue"
-						   FontSize="16"
-						   HorizontalAlignment="Center"/>
+					Text="{Binding Name}"
+					Foreground="AliceBlue"
+					FontSize="16"
+					HorizontalAlignment="Center"/>
 			</Grid>
 		</DataTemplate>
 		<utils:PhotoGalleryTemplateSelector
@@ -51,15 +54,17 @@
 			ImageTemplate="{StaticResource ImageDataTemplate}"
 			DirectoryTemplate="{StaticResource DirectoryDataTemplate}"/>
 	</views:MvxWpfView.Resources>
-	<Grid>
+	
+	<Grid Background="Black">
 		<ListView Name="ImageListView"
-				  ItemsSource="{Binding Elements}"
-				  ItemTemplateSelector="{StaticResource TemplateSelector}"
-				  Background="Black">
+					ItemsSource="{Binding Elements}"
+					SelectedItem="{Binding SelectedElement}"
+					ItemTemplateSelector="{StaticResource TemplateSelector}"
+					Visibility="{Binding ZoomMode, Converter={StaticResource BoolToInverseVisibilityConverter}}"
+					Background="Black">
 			<ListView.InputBindings>
 				<KeyBinding Key="Enter"
-							Command="{Binding SelectCommand}"
-							CommandParameter="{Binding ElementName=ImageListView, Path=SelectedItem}"/>
+							Command="{Binding SelectCommand}"/>
 			</ListView.InputBindings>
 			<ListView.ItemsPanel>
 				<ItemsPanelTemplate>
@@ -67,6 +72,273 @@
 				</ItemsPanelTemplate>
 			</ListView.ItemsPanel>
 		</ListView>
+		<Image
+			Source="{Binding SelectedElement, Converter={StaticResource ElementToImageSourceConverter}}"
+			tz:Transitionz.Opacity="{tz:OpacityParams From=0, To=1, Duration=500, TransitionOn=Visibility}"
+            tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=500, TransitionOn=Visibility}"
+            tz:Transitionz.Visibility="{Binding ZoomMode, Converter={StaticResource BoolToVisibilityConverter}}"
+			Focusable="True"
+			Width="1600"
+			Height="900">
+			<Image.InputBindings>
+				<KeyBinding Key="Enter" 
+							  Command="{Binding CloseCommand}"/>
+			</Image.InputBindings>
+		</Image>
 	</Grid>
 </views:MvxWpfView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1,11 +1,10 @@
-﻿using System.Windows;
-using MvvmCross.Core.ViewModels;
+﻿using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Wpf.Views;
 
 namespace KinectGallery.Wpf
 {
-	public partial class App : Application
+	public partial class App
 	{
 		private bool _setupComplete;
 
