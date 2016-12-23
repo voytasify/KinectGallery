@@ -1,8 +1,6 @@
-﻿using MvvmCross.Wpf.Views;
-
-namespace KinectGallery.Wpf.Views
+﻿namespace KinectGallery.Wpf.Views
 {
-	public partial class PhotoGalleryView : MvxWpfView
+	public partial class PhotoGalleryView
 	{
 		public PhotoGalleryView()
 		{

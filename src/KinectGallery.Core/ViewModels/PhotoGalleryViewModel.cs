@@ -17,12 +17,35 @@ namespace KinectGallery.Core.ViewModels
 			_fileService = fileService;
 			_specialFolderPaths = specialFolderPaths;
 
-			SelectCommand = new MvxAsyncCommand<Element>(SelectAction);
+			SelectCommand = new MvxAsyncCommand(SelectAction);
+			CloseCommand = new MvxCommand(CloseAction);
 		}
 
 		public override async void Start()
 		{
 			Elements = await _fileService.GetElements(_specialFolderPaths.GetFolderPath(SpecialFolderType.MyPictures));
+		}
+
+		private bool _zoomMode;
+		public bool ZoomMode
+		{
+			get { return _zoomMode; }
+			set
+			{
+				_zoomMode = value;
+				RaisePropertyChanged(() => ZoomMode);
+			}
+		}
+
+		private Element _selectedElement;
+		public Element SelectedElement
+		{
+			get { return _selectedElement; }
+			set
+			{
+				_selectedElement = value;
+				RaisePropertyChanged(() => SelectedElement);
+			}
 		}
 
 		private IEnumerable<Element> _elements;
@@ -32,21 +55,21 @@ namespace KinectGallery.Core.ViewModels
 			set
 			{
 				_elements = value;
-				RaisePropertyChanged();
+				RaisePropertyChanged(() => Elements);
 			}
 		}
 
 		public IMvxCommand SelectCommand { get; private set; }
-		private async Task SelectAction(Element element)
+		private async Task SelectAction()
 		{
-			if (element is ImageElement)
-			{
-				//TODO
-			}
-			else if (element is DirectoryElement)
-			{
-				Elements = await _fileService.GetElements(element.FullName);
-			}
+			if (SelectedElement is ImageElement)
+				ZoomMode = true;
+			else if (SelectedElement is DirectoryElement)
+				Elements = await _fileService.GetElements(SelectedElement.FullName);
 		}
+
+		public IMvxCommand CloseCommand { get; private set; }
+		private void CloseAction()
+			=> ZoomMode = false;
 	}
 }

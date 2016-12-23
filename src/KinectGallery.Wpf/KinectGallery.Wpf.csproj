@@ -59,6 +59,10 @@
       <HintPath>..\packages\MvvmCross.Core.4.4.0\lib\net45\MvvmCross.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SciChart.Wpf.UI.Transitionz, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SciChart.Wpf.UI.Transitionz.1.0.4\lib\net45\SciChart.Wpf.UI.Transitionz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -79,6 +83,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToInverseVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\ElementToImageSourceConverter.cs" />
     <Compile Include="Services\Impl\FileServiceWpf.cs" />
     <Compile Include="Services\Impl\SpecialFolderPathsWpf.cs" />
     <Compile Include="Setup.cs" />
