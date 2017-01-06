@@ -1,14 +1,14 @@
 ﻿<views:MvxWpfView x:Class="KinectGallery.Wpf.Views.PhotoGalleryView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:KinectGallery.Wpf.Views"
-      xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
-      xmlns:utils="clr-namespace:KinectGallery.Wpf.Utils"
-      xmlns:tz="http://schemas.abtsoftware.co.uk/transitionz"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300">
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	xmlns:local="clr-namespace:KinectGallery.Wpf.Views"
+	xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
+	xmlns:utils="clr-namespace:KinectGallery.Wpf.Utils"
+	xmlns:tz="http://schemas.abtsoftware.co.uk/transitionz"
+	mc:Ignorable="d" 
+	d:DesignHeight="300" d:DesignWidth="300">
 
 	<views:MvxWpfView.Resources>
 		<DataTemplate x:Key="ImageDataTemplate">
@@ -54,17 +54,17 @@
 			ImageTemplate="{StaticResource ImageDataTemplate}"
 			DirectoryTemplate="{StaticResource DirectoryDataTemplate}"/>
 	</views:MvxWpfView.Resources>
-	
+
 	<Grid Background="Black">
 		<ListView Name="ImageListView"
 					ItemsSource="{Binding Elements}"
 					SelectedItem="{Binding SelectedElement}"
 					ItemTemplateSelector="{StaticResource TemplateSelector}"
 					Visibility="{Binding ZoomMode, Converter={StaticResource BoolToInverseVisibilityConverter}}"
+					IsSynchronizedWithCurrentItem="True"
 					Background="Black">
 			<ListView.InputBindings>
-				<KeyBinding Key="Enter"
-							Command="{Binding SelectCommand}"/>
+				<KeyBinding Key="Enter" Command="{Binding SelectCommand}"/>
 			</ListView.InputBindings>
 			<ListView.ItemsPanel>
 				<ItemsPanelTemplate>
@@ -74,17 +74,23 @@
 		</ListView>
 		<Image
 			Source="{Binding SelectedElement, Converter={StaticResource ElementToImageSourceConverter}}"
-			tz:Transitionz.Opacity="{tz:OpacityParams From=0, To=1, Duration=500, TransitionOn=Visibility}"
-            tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=500, TransitionOn=Visibility}"
-            tz:Transitionz.Visibility="{Binding ZoomMode, Converter={StaticResource BoolToVisibilityConverter}}"
-			Focusable="True"
-			Width="1600"
-			Height="900">
+				tz:Transitionz.Opacity="{tz:OpacityParams From=0, To=1, Duration=500, TransitionOn=Visibility}"
+				tz:Transitionz.Translate="{tz:TranslateParams From='10,0', To='0,0', Duration=500, TransitionOn=Visibility}"
+				tz:Transitionz.Visibility="{Binding ZoomMode, Converter={StaticResource BoolToVisibilityConverter}}"
+				Focusable="True"
+				Width="1600"
+				Height="900">
 			<Image.InputBindings>
-				<KeyBinding Key="Enter" 
-							  Command="{Binding CloseCommand}"/>
+				<KeyBinding Key="Enter" Command="{Binding CloseCommand}"/>
 			</Image.InputBindings>
 		</Image>
+		<Grid.InputBindings>
+			<KeyBinding Key="S" Command="{Binding ScrollRightCommand}"/>
+			<KeyBinding Key="A" Command="{Binding ScrollLeftCommand}"/>
+			<KeyBinding Key="W" Command="{Binding StartScrollingRightCommand}"/>
+			<KeyBinding Key="Q" Command="{Binding StartScrollingLeftCommand}"/>
+			<KeyBinding Key="E" Command="{Binding StopScrollingCommand}"/>
+		</Grid.InputBindings>
 	</Grid>
 </views:MvxWpfView>
 

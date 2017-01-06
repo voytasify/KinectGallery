@@ -28,15 +28,18 @@ namespace KinectGallery.Core.ViewModels
 
 			StopScrollingCommand = new MvxCommand(StopScrollingAction, () => Scrolling);
 			SelectCommand = new MvxAsyncCommand(SelectAction, () => !Scrolling);
+
+			TokenSource = new CancellationTokenSource();
 		}
 
 		public override async void Start()
 		{
 			Elements = await _fileService.GetElements(_specialFolderPaths.GetFolderPath(SpecialFolderType.MyPictures));
-			SelectedElement = Elements.ElementAtOrDefault(1);
+			SelectedElement = Elements.ElementAtOrDefault(0);
 		}
 
 		private bool _zoomMode;
+
 		public bool ZoomMode
 		{
 			get { return _zoomMode; }
@@ -48,6 +51,7 @@ namespace KinectGallery.Core.ViewModels
 		}
 
 		private Element _selectedElement;
+
 		public Element SelectedElement
 		{
 			get { return _selectedElement; }
@@ -59,6 +63,7 @@ namespace KinectGallery.Core.ViewModels
 		}
 
 		private IEnumerable<Element> _elements;
+
 		public IEnumerable<Element> Elements
 		{
 			get { return _elements; }
@@ -70,6 +75,7 @@ namespace KinectGallery.Core.ViewModels
 		}
 
 		public IMvxCommand ScrollLeftCommand { get; private set; }
+
 		private void ScrollLeft()
 		{
 			var elementBefore = Elements.TakeWhile(e => e.Name != SelectedElement.Name).LastOrDefault();
@@ -80,6 +86,7 @@ namespace KinectGallery.Core.ViewModels
 		}
 
 		public IMvxCommand ScrollRightCommand { get; private set; }
+
 		private void ScrollRight()
 		{
 			var elementAfter = Elements.SkipWhile(e => e.Name != SelectedElement.Name).ElementAtOrDefault(1);
@@ -90,9 +97,14 @@ namespace KinectGallery.Core.ViewModels
 		}
 
 		public IMvxCommand StartScrollingLeftCommand { get; private set; }
+
 		private void StartScrollingLeftAction()
 		{
 			Scrolling = true;
+
+			if(TokenSource.IsCancellationRequested)
+				TokenSource = new CancellationTokenSource();
+
 			RotatePersonsAsync(ScrollDirection.Left, TokenSource.Token);
 		}
 
@@ -101,11 +113,19 @@ namespace KinectGallery.Core.ViewModels
 		private void StartScrollingRightAction()
 		{
 			Scrolling = true;
+
+			if (TokenSource.IsCancellationRequested)
+				TokenSource = new CancellationTokenSource();
+
 			RotatePersonsAsync(ScrollDirection.Right, TokenSource.Token);
 		}
 
 		public IMvxCommand StopScrollingCommand { get; private set; }
-		private void StopScrollingAction() => Scrolling = false;
+		private void StopScrollingAction()
+		{
+			Scrolling = false;
+			TokenSource.Cancel();
+		}
 
 		public IMvxCommand SelectCommand { get; private set; }
 		private async Task SelectAction()
