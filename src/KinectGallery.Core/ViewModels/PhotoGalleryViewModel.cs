@@ -28,6 +28,7 @@ namespace KinectGallery.Core.ViewModels
 
 			StopScrollingCommand = new MvxCommand(StopScrollingAction, () => Scrolling);
 			SelectCommand = new MvxAsyncCommand(SelectAction, () => !Scrolling);
+			CloseCommand = new MvxCommand(CloseAction);
 
 			TokenSource = new CancellationTokenSource();
 		}

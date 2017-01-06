@@ -63,9 +63,6 @@
 					Visibility="{Binding ZoomMode, Converter={StaticResource BoolToInverseVisibilityConverter}}"
 					IsSynchronizedWithCurrentItem="True"
 					Background="Black">
-			<ListView.InputBindings>
-				<KeyBinding Key="Enter" Command="{Binding SelectCommand}"/>
-			</ListView.InputBindings>
 			<ListView.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="Horizontal"/>
@@ -79,17 +76,15 @@
 				tz:Transitionz.Visibility="{Binding ZoomMode, Converter={StaticResource BoolToVisibilityConverter}}"
 				Focusable="True"
 				Width="1600"
-				Height="900">
-			<Image.InputBindings>
-				<KeyBinding Key="Enter" Command="{Binding CloseCommand}"/>
-			</Image.InputBindings>
-		</Image>
+				Height="900"/>
 		<Grid.InputBindings>
 			<KeyBinding Key="S" Command="{Binding ScrollRightCommand}"/>
 			<KeyBinding Key="A" Command="{Binding ScrollLeftCommand}"/>
 			<KeyBinding Key="W" Command="{Binding StartScrollingRightCommand}"/>
 			<KeyBinding Key="Q" Command="{Binding StartScrollingLeftCommand}"/>
 			<KeyBinding Key="E" Command="{Binding StopScrollingCommand}"/>
+			<KeyBinding Key="D" Command="{Binding SelectCommand}"/>
+			<KeyBinding Key="F" Command="{Binding CloseCommand}"/>
 		</Grid.InputBindings>
 	</Grid>
 </views:MvxWpfView>

@@ -37,6 +37,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Enums\ScrollDirection.cs" />
     <Compile Include="Enums\SpecialFolderType.cs" />
+    <Compile Include="Extensions\CommandExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\DirectoryElement.cs" />
     <Compile Include="Models\ImageElement.cs" />
