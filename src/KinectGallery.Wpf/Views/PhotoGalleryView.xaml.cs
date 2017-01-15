@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -7,10 +6,11 @@ using KinectGallery.Core.Extensions;
 using KinectGallery.Core.ViewModels;
 using LightBuzz.Vitruvius;
 using Microsoft.Kinect;
+using MvvmCross.Wpf.Views;
 
 namespace KinectGallery.Wpf.Views
 {
-	public partial class PhotoGalleryView
+	public partial class PhotoGalleryView : MvxWpfView
 	{
 		private GestureController _gestureController;
 
@@ -73,29 +73,33 @@ namespace KinectGallery.Wpf.Views
 			switch (e.Type)
 			{
 				case GestureType.JoinedHands:
-					Vm.StopScrollingCommand.ExecuteIfCan();
+					ViewModel.StopScrollingCommand.ExecuteIfCan();
 					break;
 				case GestureType.SwipeLeft:
-					Vm.ScrollLeftCommand.ExecuteIfCan();
+					ViewModel.ScrollLeftCommand.ExecuteIfCan();
 					break;
 				case GestureType.SwipeRight:
-					Vm.ScrollRightCommand.ExecuteIfCan();
+					ViewModel.ScrollRightCommand.ExecuteIfCan();
 					break;
 				case GestureType.SwipeUp:
-					Vm.StartScrollingRightCommand.ExecuteIfCan();
+					ViewModel.StartScrollingRightCommand.ExecuteIfCan();
 					break;
 				case GestureType.SwipeDown:
-					Vm.StartScrollingLeftCommand.ExecuteIfCan();
+					ViewModel.StartScrollingLeftCommand.ExecuteIfCan();
 					break;
 				case GestureType.ZoomIn:
-					Vm.SelectCommand.ExecuteIfCan();
+					ViewModel.SelectCommand.ExecuteIfCan();
 					break;
 				case GestureType.ZoomOut:
-					Vm.CloseCommand.ExecuteIfCan();
+					ViewModel.CloseCommand.ExecuteIfCan();
 					break;
 			}
 		}
 
-		protected PhotoGalleryViewModel Vm => (PhotoGalleryViewModel) ViewModel;
+		public new PhotoGalleryViewModel ViewModel
+		{
+			get { return (PhotoGalleryViewModel)base.ViewModel; }
+			set { base.ViewModel = value; }
+		}
 	}
 }
