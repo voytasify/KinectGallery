@@ -13,6 +13,7 @@ namespace KinectGallery.Wpf.Views
 	public partial class PhotoGalleryView : MvxWpfView
 	{
 		private GestureController _gestureController;
+		private bool _kinectSetupComplete;
 
 		public PhotoGalleryView()
 		{
@@ -42,6 +43,9 @@ namespace KinectGallery.Wpf.Views
 
 		private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
 		{
+			if (_kinectSetupComplete)
+				return;
+
 			var sensor = SensorExtensions.Default();
 			if (sensor == null)
 				return;
@@ -53,6 +57,8 @@ namespace KinectGallery.Wpf.Views
 			_gestureController.GestureRecognized += GestureControllerOnGestureRecognized;
 
 			sensor.Start();
+
+			_kinectSetupComplete = true;
 		}
 
 		private void SensorOnSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
@@ -66,10 +72,13 @@ namespace KinectGallery.Wpf.Views
 				foreach (var skeleton in skeletons)
 					_gestureController.Update(skeleton);
 			}
+
 		}
 
 		private void GestureControllerOnGestureRecognized(object sender, GestureEventArgs e)
 		{
+			GestureNameTextBox.Text = e.Name;
+
 			switch (e.Name)
 			{
 				case "JoinedHands":

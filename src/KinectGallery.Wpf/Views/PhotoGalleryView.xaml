@@ -77,6 +77,13 @@
 				Focusable="True"
 				Width="1600"
 				Height="900"/>
+		<TextBox x:Name="GestureNameTextBox" 
+				 VerticalAlignment="Bottom" 
+				 HorizontalAlignment="Center" 
+				 FontSize="80"
+				 Background="Black"
+				 Foreground="Purple"
+				 Text="NONE"/>
 		<Grid.InputBindings>
 			<KeyBinding Key="S" Command="{Binding ScrollRightCommand}"/>
 			<KeyBinding Key="A" Command="{Binding ScrollLeftCommand}"/>
