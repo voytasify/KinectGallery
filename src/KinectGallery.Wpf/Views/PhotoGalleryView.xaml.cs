@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Navigation;
+using System.Windows.Threading;
 using KinectGallery.Core.Extensions;
 using KinectGallery.Core.ViewModels;
 using LightBuzz.Vitruvius;
@@ -19,6 +22,13 @@ namespace KinectGallery.Wpf.Views
 		{
 			InitializeComponent();
 			Loaded += OnLoaded;
+
+			Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
+			{
+				var navWindow = Window.GetWindow(this) as NavigationWindow;
+				if (navWindow != null)
+					navWindow.ShowsNavigationUI = false;
+			}));
 
 			ImageListView.ItemContainerGenerator.StatusChanged += (sender, args) =>
 			{
@@ -43,9 +53,12 @@ namespace KinectGallery.Wpf.Views
 
 		private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
 		{
-			if (_kinectSetupComplete)
-				return;
+			if (_kinectSetupComplete == false)
+				DoKinectSetup();
+		}
 
+		private void DoKinectSetup()
+		{
 			var sensor = SensorExtensions.Default();
 			if (sensor == null)
 				return;
@@ -72,12 +85,11 @@ namespace KinectGallery.Wpf.Views
 				foreach (var skeleton in skeletons)
 					_gestureController.Update(skeleton);
 			}
-
 		}
 
 		private void GestureControllerOnGestureRecognized(object sender, GestureEventArgs e)
 		{
-			GestureNameTextBox.Text = e.Name;
+			GestureNameTextBlock.Text = e.Name;
 
 			switch (e.Name)
 			{

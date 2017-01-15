@@ -42,6 +42,7 @@
     <Compile Include="Models\DirectoryElement.cs" />
     <Compile Include="Models\ImageElement.cs" />
     <Compile Include="Models\Element.cs" />
+    <Compile Include="Models\RootDirectoryElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IFileService.cs" />
     <Compile Include="Services\ISpecialFolderPaths.cs" />

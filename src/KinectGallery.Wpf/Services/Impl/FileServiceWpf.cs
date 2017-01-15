@@ -20,7 +20,7 @@ namespace KinectGallery.Wpf.Services.Impl
 
 				var parentDirectory = directory.Parent;
 				if(parentDirectory != null)
-					elements.Add(new DirectoryElement($"go back -> {parentDirectory.Name}", parentDirectory.FullName));
+					elements.Add(new RootDirectoryElement(parentDirectory.Name, parentDirectory.FullName));
 
 				foreach (var dir in directory.GetDirectories())
 					elements.Add(new DirectoryElement(dir.Name, dir.FullName));

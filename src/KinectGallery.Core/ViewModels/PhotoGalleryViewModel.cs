@@ -106,7 +106,7 @@ namespace KinectGallery.Core.ViewModels
 			if(TokenSource.IsCancellationRequested)
 				TokenSource = new CancellationTokenSource();
 
-			RotatePersonsAsync(ScrollDirection.Left, TokenSource.Token);
+			RotateElementesAsync(ScrollDirection.Left, TokenSource.Token);
 		}
 
 		public IMvxCommand StartScrollingRightCommand { get; private set; }
@@ -118,7 +118,7 @@ namespace KinectGallery.Core.ViewModels
 			if (TokenSource.IsCancellationRequested)
 				TokenSource = new CancellationTokenSource();
 
-			RotatePersonsAsync(ScrollDirection.Right, TokenSource.Token);
+			RotateElementesAsync(ScrollDirection.Right, TokenSource.Token);
 		}
 
 		public IMvxCommand StopScrollingCommand { get; private set; }
@@ -144,7 +144,7 @@ namespace KinectGallery.Core.ViewModels
 		public Timer Timer { get; private set; }
 		public CancellationTokenSource TokenSource { get; private set; }
 
-		private async Task RotatePersonsAsync(ScrollDirection direction, CancellationToken cancellationToken)
+		private async Task RotateElementesAsync(ScrollDirection direction, CancellationToken cancellationToken)
 		{
 			while (!cancellationToken.IsCancellationRequested)
 			{
