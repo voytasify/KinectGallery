@@ -70,27 +70,27 @@ namespace KinectGallery.Wpf.Views
 
 		private void GestureControllerOnGestureRecognized(object sender, GestureEventArgs e)
 		{
-			switch (e.Type)
+			switch (e.Name)
 			{
-				case GestureType.JoinedHands:
+				case "JoinedHands":
 					ViewModel.StopScrollingCommand.ExecuteIfCan();
 					break;
-				case GestureType.SwipeLeft:
+				case "SwipeLeft":
 					ViewModel.ScrollLeftCommand.ExecuteIfCan();
 					break;
-				case GestureType.SwipeRight:
+				case "SwipeRight":
 					ViewModel.ScrollRightCommand.ExecuteIfCan();
 					break;
-				case GestureType.SwipeUp:
+				case "SwipeUp":
 					ViewModel.StartScrollingRightCommand.ExecuteIfCan();
 					break;
-				case GestureType.SwipeDown:
+				case "SwipeDown":
 					ViewModel.StartScrollingLeftCommand.ExecuteIfCan();
 					break;
-				case GestureType.ZoomIn:
+				case "ZoomIn":
 					ViewModel.SelectCommand.ExecuteIfCan();
 					break;
-				case GestureType.ZoomOut:
+				case "ZoomOut":
 					ViewModel.CloseCommand.ExecuteIfCan();
 					break;
 			}
